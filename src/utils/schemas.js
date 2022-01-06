@@ -1,62 +1,78 @@
-const schema = {
-  ApplicationUsers: {
-    id: "integer",
-    username: "username(6,20)",
-    email: "email",
-    fullname: "name",
-    first_name: "name.firstName",
-    surnames: "name.lastName",
-    password: "password",
-    userRegistered: "date",
-    lastActivityAt: "date",
-  },
-  ContentTypes: {
-    id: "integer",
-    name: "username(6,20)",
-  },
-  tags: {
-    id: "integer",
-    name: "username(6,20)",
-    description: "html(2,5)",
-  },
-  Contents: {
-    id: "integer",
-    publishedAt: "date",
-    published: "boolean",
-    // contentType: {
-    //   value: "Articulo",
-    //   label: "Articulo",
-    // },
-    title: "html(1,2)",
-    url: "url",
-    imageURL: "url",
-    videoURL: "url",
-    // groups: "",
-    // tags: "",
-    text: "html(3,6)",
-  },
-  Groups: {
-    id: "integer",
-    name: "username(6,20)",
-    isAdminGroup: "boolean",
-  },
+import faker from "faker";
+import shortid from "shortid";
 
-  Literals: {
-    id: "integer",
-    key: "username(6,20)",
-    value: "username(6,20)",
-    updatedAt: "date",
-    active: "boolean",
-  },
-  Faqs: {
-    id: "integer",
-    rank: "integer",
-    question: "html(2,5)",
-    answer: "html(2,5)",
-    // category: {
-    //   value: "html(1,5)",
-    //   label: "html(1,5)",
-    // },
-  },
+const _a = (amount = 2) => new Array(amount).fill(true);
+
+const users = (amount) =>
+  _a(amount).map((u) => ({
+    id: shortid.generate(),
+    username: faker.name.findName(),
+    email: faker.internet.email(),
+    fullname: faker.name.findName(),
+    first_name: faker.name.firstName(),
+    surnames: faker.name.lastName(),
+    password: faker.password,
+    userRegistered: faker.date.past(21),
+    lastActivityAt: faker.date.past(2),
+  }));
+
+const contentTypes = (amount) =>
+  _a(amount).map((u) => ({
+    id: shortid.generate(),
+    name: faker.name.findName(),
+  }));
+
+const tags = (amount) =>
+  _a(amount).map((u) => ({
+    id: shortid.generate(),
+    name: faker.name.findName(),
+    description: faker.lorem.sentences(2),
+  }));
+
+const contents = (amount) =>
+  _a(amount).map((u) => ({
+    id: shortid.generate(),
+    text: faker.lorem.sentences(5),
+    url: faker.internet.url(),
+    imageURL: faker.image.imageUrl(),
+    videoURL: faker.image.imageUrl(),
+    title: faker.lorem.sentence(),
+    published: faker.datatype.boolean(),
+    publishedAt: faker.date.past(21),
+    lastActivityAt: faker.date.past(2),
+  }));
+
+const groups = (amount) =>
+  _a(amount).map((u) => ({
+    id: shortid.generate(),
+    name: faker.name.findName(),
+    isAdminGroup: faker.datatype.boolean(),
+  }));
+
+const literals = (amount) =>
+  _a(amount).map((u) => ({
+    id: shortid.generate(),
+    key: faker.lorem.word(),
+    value: faker.lorem.words(),
+    updatedAt: faker.date.past(21),
+    active: faker.datatype.boolean(2),
+  }));
+
+const faqs = (amount) =>
+  _a(amount).map((u) => ({
+    id: shortid.generate(),
+    rank: faker.datatype.number(99),
+    question: faker.lorem.words(9),
+    answer: faker.lorem.paragraphs(1),
+  }));
+
+const schema = {
+  ApplicationUsers: users(9),
+  ContentTypes: contentTypes(),
+  tags: tags(16),
+  Contents: contents(39),
+  Groups: groups(8),
+  Literals: literals(18),
+  Faqs: faqs(22),
 };
 export default schema;

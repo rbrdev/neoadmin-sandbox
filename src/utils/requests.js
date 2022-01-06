@@ -1,7 +1,6 @@
-import { SchemaFaker } from "schema-faker";
 import schemas from "./schemas";
 
-const faker = new SchemaFaker();
+const fakeApi = ({ endpoint }) => schemas[endpoint];
 
 export const loginRequest = (credentials) => {
   return new Promise((res, rej) => res({ token: "id", user: { id: 1 } }));
@@ -21,9 +20,7 @@ export const findAllRequest = (endpoint, defaultFilter = {}) => (
     pagination: { page: 1, itemsPerPage: 10 },
   }
 ) => {
-  return new Promise((res, rej) =>
-    res(faker.fakeApi({ data: schemas[endpoint] }).data)
-  );
+  return new Promise((res, rej) => res(fakeApi({ endpoint })));
 };
 
 export const findRequest = (endpoint, defaultFilter = {}) => (
@@ -32,9 +29,7 @@ export const findRequest = (endpoint, defaultFilter = {}) => (
   }
 ) => {
   console.log("endpointendpoint", endpoint);
-  return new Promise((res, rej) =>
-    res(faker.fakeApi({ data: schemas[endpoint] }).data)
-  );
+  return new Promise((res, rej) => res(fakeApi({ endpoint })));
 };
 
 export const findOneRequest = (endpoint, defaultFilter = {}) => (data) => {
