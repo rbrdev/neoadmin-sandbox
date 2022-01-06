@@ -1,0 +1,9 @@
+body {
+  font-family: Assistant;
+  overflow: hidden;
+  margin: 0;
+}
+
+#root > div > div {
+  background-color: white;
+}
